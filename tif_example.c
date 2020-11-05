@@ -49,6 +49,7 @@ int main(int argc, char **argv)
 	 * Return -1 if no CPU was setup as nohz_full
 	 */
 	int nohz_cpu = get_nohz_full_cpu();
+
 	if (nohz_cpu < 0) {
 		printf("NOHZ CPU not found\n");
 		goto ext;

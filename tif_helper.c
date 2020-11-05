@@ -102,20 +102,28 @@ static long get_time(void)
 
 static int is_cur_cpu_data(int cpu, char *line)
 {
-	while (*line && isspace(*line)) line++;
-	if (!memcmp("cpu:", line, 4)) {
+	while (*line && isspace(*line))
+		line++;
+
+	if (!memcmp("cpu:", line, 4))
 		return (cpu == atoi(line + 4));
-	}
+
 	return 0;
 }
 
 static int get_tick_stopped(char *line)
 {
-	while (*line && isspace(*line)) line++;
+	while (*line && isspace(*line))
+		line++;
+
 	if (*line && !memcmp(".tick_stopped", line, 13)) {
-		while (*line && *line != ':') line++;
-		if (*line) line++;
-			return atoi(line+1);
+		while (*line && *line != ':')
+			line++;
+
+		if (*line)
+			line++;
+
+		return atoi(line+1);
 	}
 
 	return -1;
@@ -133,13 +141,12 @@ static int is_tick_stopped(int cpu)
 
 	fp = fopen("/proc/timer_list", "rb");
 	if (fp) {
-		while(getline(&line, &size, fp) != -1) {
+		while (getline(&line, &size, fp) != -1) {
 			if (is_cur_cpu_data(cpu, line)) {
-				while(getline(&line, &size, fp) != -1) {
+				while (getline(&line, &size, fp) != -1) {
 					stopped = get_tick_stopped(line);
-					if (stopped != -1) {
+					if (stopped != -1)
 						break;
-					}
 				}
 				break;
 			}
@@ -284,7 +291,7 @@ int set_sched_fifo(int pid)
  * void* - pointer to object with cpu mask, NULL on error
  *
  */
-static void* get_nohz_full_cpu_mask(void)
+static void *get_nohz_full_cpu_mask(void)
 {
 	FILE *fp;
 	char str[128];
@@ -352,8 +359,11 @@ int get_nohz_full_cpu(void)
 
 		fclose(fp);
 
-		if ((ret) && (c = atoi(str)))
-			return c;
+		if (ret) {
+			c = atoi(str);
+			if (c)
+				return c;
+		}
 	}
 
 	return -1;

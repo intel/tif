@@ -60,8 +60,7 @@ static inline uint64_t get_time(void)
 		asm volatile ("lfence":::"memory");
 		retval = __rdtscp(&tsc_aux);
 		asm volatile ("lfence":::"memory");
-	}
-	else {
+	} else {
 		struct timespec time;
 
 		asm volatile ("lfence":::"memory");
@@ -74,7 +73,7 @@ static inline uint64_t get_time(void)
 	return retval;
 }
 
-static void inline print_jitter(uint64_t jitter)
+static inline void print_jitter(uint64_t jitter)
 {
 	static int once;
 
@@ -166,7 +165,7 @@ static void *rt_thread(void *arg)
 		return NULL;
 	}
 
-	for (int l = 0;l < num_loops; l++) {
+	for (int l = 0; l < num_loops; l++) {
 		uint64_t start, end, diff;
 
 		start = get_time();
@@ -296,8 +295,7 @@ static void dump_opts(void)
 	if (duration) {
 		printf("Max duration : %dm\n", duration);
 		printf("Num tests : N/A\n");
-	}
-	else {
+	} else {
 		printf("Max duration : N/A\n");
 		printf("Num tests : %d\n", num_tests);
 	}
@@ -320,10 +318,8 @@ int main(int argc, char **argv)
 
 	printf("\nRT jitter measurement tool using TIF\n\n\t*** Press Ctrl-C to exit ***\n\n");
 
-	if (signal(SIGINT, signal_handler) == SIG_ERR) {
-
+	if (signal(SIGINT, signal_handler) == SIG_ERR)
 		printf("Error registering Ctrl-C handler\n");
-	}
 
 	if (nohz_enter()) {
 		printf("Error setting up NOHZ_FULL\n");
@@ -334,8 +330,7 @@ int main(int argc, char **argv)
 		if (duration) {
 			if (time_expired())
 				break;
-		}
-		else {
+		} else {
 			if (tests_done >= num_tests)
 				break;
 		}
@@ -351,8 +346,10 @@ int main(int argc, char **argv)
 		if (td.ret == -1)
 			goto ext;
 
-		if (td.jitter > cmax) cmax = td.jitter;
-		if (td.jitter < cmin) cmin = td.jitter;
+		if (td.jitter > cmax)
+			cmax = td.jitter;
+		if (td.jitter < cmin)
+			cmin = td.jitter;
 		avg += td.jitter;
 		tests_done++;
 		print_jitter(td.jitter);

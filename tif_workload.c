@@ -30,13 +30,13 @@ void nohz_workload(void)
 	static unsigned int a[WORK_MEM_SIZE];
 	unsigned int i, x, y;
 
-	for (i = 0;i < WORKLOAD_LOOPS / 2;i++) {
+	for (i = 0; i < WORKLOAD_LOOPS / 2; i++) {
 		x = random_num() % WORK_MEM_SIZE;
 		a[x] = x + 1;
 		y = random_num() % WORK_MEM_SIZE;
 		a[y] = x + y;
 	}
-	for (i = 0;i < WORKLOAD_LOOPS / 2;i++) {
+	for (i = 0; i < WORKLOAD_LOOPS / 2; i++) {
 		x = a[random_num() % WORK_MEM_SIZE];
 		y = a[random_num() % WORK_MEM_SIZE];
 		x += y;
