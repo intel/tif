@@ -5,10 +5,12 @@ nohz state. The tif_jitter application demonstrates use of the framework. Also i
 a bare bones instructive example (tif_example.c).
 
 Building tif_jitter:
-make
+
+`make`
 
 Building tif_example:
-make example
+
+`make example`
 
 Files:
 Framework - tif_helper.c and tif_helper.h
@@ -102,3 +104,30 @@ called again to ensure nohz state is reentered.
 4. nohz_wait - Wait till nohz state is entered. Use 'forced' option for PREEMPT_RT kernel.
 5. Run RT workload
 6. nohz_exit - Reverses the 100% scheduler runtime setting
+
+<b>Test Application</b>
+
+The tif_test application tests entry into nohz state and measures the time taken.
+
+tif_stress.sh runs the tif_test in a loop till nohz entry failure is encountered.
+
+Building tif_test:
+
+`make test`
+
+`./tif_test`
+<pre>
+Successfully entered nohz state in 220us
+</pre>
+
+`./tif_stress.sh`
+<pre>
+Test# 818
+Successfully entered nohz state in 724us
+
+Error entering nohz state after 15000102us
+Reproduced NOHZ_FULL failure after 818 tries!!!
+Test elapsed time: 835 seconds
+</pre>
+
+
