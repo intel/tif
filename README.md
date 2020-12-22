@@ -23,7 +23,6 @@ apt-get install libnuma-dev
 RHEL/CentOs/Fedora:
 yum install numactl-devel
 
-Uses gcc optimization level 3. Gcc option -O3
 Uses pthreads. Use gcc option -pthread
 
 <pre>
