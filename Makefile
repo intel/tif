@@ -7,5 +7,9 @@ all:
 
 example:
 	gcc -Wall -O2 tif_example.c tif_helper.c -lnuma -o tif_example
+
+test:
+	gcc -Wall -O2 tif_test.c tif_helper.c -lnuma -o tif_test
+
 clean:
-	rm -f tif_jitter tif_example
+	rm -f tif_jitter tif_example tif_test
